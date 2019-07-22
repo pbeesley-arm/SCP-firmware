@@ -15,6 +15,8 @@ MODULE_INCLUDES += $(shell ls -d $(PRODUCTS_DIR)/*/module/*/include/ \
 MODULE_DOCS += $(shell ls -d $(MODULES_DIR)/*/doc/ 2>/dev/null)
 MODULE_DOCS += $(shell ls -d $(PRODUCTS_DIR)/*/module/*/doc/ 2>/dev/null)
 
+SPHINXBUILD   ?= sphinx-build
+
 export MODULE_INCLUDES
 export MODULE_DOCS
 
@@ -24,3 +26,4 @@ include $(BS_DIR)/rules.mk
 doc: | $(BUILD_DOC_DIR)/
 	$(call show-action,DOC,)
 	$(DOC) $(DOC_DIR)/config.dxy
+	$(SPHINXBUILD) -M "html" "$(DOC_DIR)" "$(BUILD_DOC_DIR)/sphinx"
