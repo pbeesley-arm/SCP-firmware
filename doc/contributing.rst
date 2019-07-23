@@ -1,5 +1,5 @@
-Contributing to SCP-firmware
-============================
+Contributing
+============
 
 Getting Started
 ---------------

@@ -1,10 +1,10 @@
-SCP-firmware Change Log
-=======================
+Change Log
+==========
 
 Copyright (c) 2019, Arm Limited and Contributors. All rights reserved.
 
-SCP-firmware - version 2.4.0
-============================
+Version 2.4.0
+-------------
 
 New features
 ------------

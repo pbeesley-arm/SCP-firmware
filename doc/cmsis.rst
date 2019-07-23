@@ -2,7 +2,7 @@ CMSIS Support and Integration
 =============================
 
 Overview
-========
+--------
 
 Firmware using components with a dependency on the CMSIS library will
 need to configure CMSIS for the target device. This is done by way of a
@@ -15,7 +15,7 @@ it is recommended that new architectures, products and firmwares follow
 it.
 
 Example
-=======
+-------
 
 The example below configures CMSIS to run on an Arm Cortex-M3 r2p1 with
 an MPU and basic interrupts. The definitions used in this example are
@@ -48,7 +48,7 @@ expected by CMSIS, and are described in the CMSIS 5 documentation.
     #endif /* FMW_CMSIS_H */
 
 Sharing Configurations
-======================
+----------------------
 
 In some cases, it may be desirable to use the same CMSIS configuration
 for more than one firmware in a product. The build system provides no

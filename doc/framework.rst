@@ -1,11 +1,5 @@
-.. role:: raw-latex(raw)
-   :format: latex
-..
-
 Framework Guide
 ===============
-
-Copyright (c) 2011-2017, Arm Limited. All rights reserved.
 
 This guide covers the framework that is used to implement the SCP/MCP
 Software and which can also be used to extend the provided
@@ -19,11 +13,6 @@ detailed descriptions of the framework components, refer to the
 source-level Doxygen documentation. If this has not yet been built then
 the readme.md file provides information on getting started from scratch.
 This file can be found in the root of the SCP/MCP Software directory.
-
-Arm welcomes any feedback on the SCP/MCP Software, including on this
-documentation. To provide feedback or to request support please contact
-Arm by email at support@arm.com. Arm licensees may also contact Arm via
-their partner managers.
 
 Framework Components
 --------------------
@@ -57,9 +46,9 @@ that are used for product-specific definitions.
 The directory structure of a project can be seen below, note that there
 is one directory per product under the product directory.
 
-:raw-latex:`\code
-`root/ product/ productname/ include/ src/ module/ firmware\_a/
-firmware\_b/ product.mk :raw-latex:`\endcode`
+`\code
+`root/ product/ productname/ include/ src/ module/ firmware_a/
+firmware_b/ product.mk `\endcode`
 
 Firmware
 ~~~~~~~~
@@ -70,35 +59,35 @@ firmware lists the modules that will be built into its image and
 provides configuration data for each of these modules.
 
 For each firmware, linker information must be provided in a
-*fmw\_memory.ld.S* file:
+*fmw_memory.ld.S* file:
 
--  FIRMWARE\_MEM\_MODE: The desired memory region configuration. Can be
+-  FIRMWARE_MEM_MODE: The desired memory region configuration. Can be
    one of the following:
 
-   -  FWK\_MEM\_MODE\_SINGLE\_REGION
-   -  FWK\_MEM\_MODE\_DUAL\_REGION\_RELOCATION
-   -  FWK\_MEM\_MODE\_DUAL\_REGION\_NO\_RELOCATION
+   -  FWK_MEM_MODE_SINGLE_REGION
+   -  FWK_MEM_MODE_DUAL_REGION_RELOCATION
+   -  FWK_MEM_MODE_DUAL_REGION_NO_RELOCATION
 
--  FIRMWARE\_MEM0\_BASE: The base address of the MEM0 region, which is
+-  FIRMWARE_MEM0_BASE: The base address of the MEM0 region, which is
    always used regardless of the memory region configuration given by
-   *FIRMWARE\_MEM\_MODE*.
--  FIRMWARE\_MEM0\_SIZE: The size of the MEM0 region in bytes.
+   *FIRMWARE_MEM_MODE*.
+-  FIRMWARE_MEM0_SIZE: The size of the MEM0 region in bytes.
 
 If a dual-region memory configuration is used then
-*FIRMWARE\_MEM1\_BASE* and *FIRMWARE\_MEM1\_SIZE* must also be defined.
+*FIRMWARE_MEM1_BASE* and *FIRMWARE_MEM1_SIZE* must also be defined.
 
 It is the responsibility of the firmware to define - in its Makefile -
-the architecture target for the image (using *BS\_FIRMWARE\_CPU*) and
+the architecture target for the image (using *BS_FIRMWARE_CPU*) and
 whether the firmware is multithreading-enabled (using
-*BS\_FIRMWARE\_HAS\_MULTITHREADING*) and/or has notification support
-(using *BS\_FIRMWARE\_HAS\_NOTIFICATION*).
+*BS_FIRMWARE_HAS_MULTITHREADING*) and/or has notification support
+(using *BS_FIRMWARE_HAS_NOTIFICATION*).
 
 An example of a simple firmware directory which contains configuration
 files for two modules, the firmware.mk file, and the linker script.
 
-:raw-latex:`\code
-`firmware\_root/ config\_module\_a.c config\_module\_b.c firmware.mk
-fmw\_memory.ld.s :raw-latex:`\endcode`
+`\code
+`firmware_root/ config_module_a.c config_module_b.c firmware.mk
+fmw_memory.ld.s `\endcode`
 
 Modules
 ~~~~~~~
@@ -144,7 +133,7 @@ to perform work on its behalf at a lower level.
    it may perform some work that is entirely self-contained.
 
 Every module must declare and define a structure of type *struct
-fwk\_module* and it is this structure that describes the module within
+fwk_module* and it is this structure that describes the module within
 the context of the framework. The framework uses information from this
 structure to perform validation during certain operations such as
 binding to a module's API.
@@ -152,39 +141,39 @@ binding to a module's API.
 An example of a module description is given below. This example module
 defines itself as a service that provides one API for other modules to
 use. Because it provides an API it implements the
-*process\_bind\_request* function of the framework's module interface so
+*process_bind_request* function of the framework's module interface so
 that other modules can bind to it. It does not generate any events.
 
-:raw-latex:`\code
-`const struct fwk\_module mod\_modulename = { .name = "Example Module",
-.type = FWK\_MODULE\_TYPE\_SERVICE, .api\_count = 1, .event\_count = 0,
-.init = modulename\_init, .element\_init = modulename\_element\_init,
-.bind = modulename\_bind, .process\_bind\_request =
-modulename\_process\_bind\_request, }; :raw-latex:`\endcode`
+`\code
+`const struct fwk_module mod_modulename = { .name = "Example Module",
+.type = FWK_MODULE_TYPE_SERVICE, .api_count = 1, .event_count = 0,
+.init = modulename_init, .element_init = modulename_element_init,
+.bind = modulename_bind, .process_bind_request =
+modulename_process_bind_request, }; `\endcode`
 
 Module Configuration
 ^^^^^^^^^^^^^^^^^^^^
 
 For each module that is built as part of a product, a corresponding
 module configuration must be provided. This configuration takes the form
-of a *struct fwk\_module\_config* structure that is defined in a
+of a *struct fwk_module_config* structure that is defined in a
 configuration file within the firmware that the module will be built
 into.
 
-The declaration for the *fwk\_module\_config* structure is given below:
+The declaration for the *fwk_module_config* structure is given below:
 
-:raw-latex:`\code
-`struct fwk\_module\_config { const struct fwk\_element
-*(*\ get\_element\_table)(fwk\_id\_t module\_id); const void \*data; };
-:raw-latex:`\endcode`
+`\code
+`struct fwk_module_config { const struct fwk_element
+*(*\ get_element_table)(fwk_id_t module_id); const void \*data; };
+`\endcode`
 
-The framework uses the *get\_element\_table* function pointer to access
+The framework uses the *get_element_table* function pointer to access
 the table of elements that the product has provided for the module. If
 the pointer is NULL then the framework assumes that no elements will be
 provided.
 
 Each of the entries in the element table is a pointer to a *struct
-fwk\_element* structure. Elements are made available to the module
+fwk_element* structure. Elements are made available to the module
 during the *element initialization* stage.
 
 The second member of the structure is an optional void pointer that
@@ -213,11 +202,11 @@ that is as generic as possible.
 Elements are defined by a structure containing a pointer to a name
 string, the number of sub-elements associated with the element, and a
 void pointer to data that is in a module-defined format. The declaration
-for the *fwk\_element* structure is given below:
+for the *fwk_element* structure is given below:
 
-:raw-latex:`\code
-`struct fwk\_element { const char *name; size\_t sub\_element\_count;
-const void *\ data; }; :raw-latex:`\endcode`
+`\code
+`struct fwk_element { const char *name; size_t sub_element_count;
+const void *\ data; }; `\endcode`
 
 Sub-elements
 ~~~~~~~~~~~~
@@ -244,7 +233,7 @@ context of a module, a sub-element within the context of an element, or
 a module within the context of a firmware.
 
 Module indices are generated for each firmware by the build system and
-are placed in the *fwk\_module\_idx.h* header file.
+are placed in the *fwk_module_idx.h* header file.
 
 Identifiers
 ^^^^^^^^^^^
@@ -316,28 +305,28 @@ well-defined. For example, the module may provide an enumeration in its
 public header that lists the APIs it offers, giving the API indices in a
 structured way:
 
-:raw-latex:`\code
-`enum mod\_modulename\_api { MOD\_MODULENAME\_API\_A,
-MOD\_MODULENAME\_API\_B, }; :raw-latex:`\endcode`
+`\code
+`enum mod_modulename_api { MOD_MODULENAME_API_A,
+MOD_MODULENAME_API_B, }; `\endcode`
 
 Alternatively, the module may define these values individually:
 
-:raw-latex:`\code
-`#define MOD\_MODULENAME\_API\_IDX\_A 0 #define
-MOD\_MODULENAME\_API\_IDX\_B 1 :raw-latex:`\endcode`
+`\code
+`#define MOD_MODULENAME_API_IDX_A 0 #define
+MOD_MODULENAME_API_IDX_B 1 `\endcode`
 
 Finally, the module may offer its API identifiers directly using the
 appropriate macros to construct the identifiers itself. This approach
 has the benefit that modules using the API do not need to create the API
 identifiers themselves.
 
-:raw-latex:`\code
-`static const fwk\_id\_t mod\_modulename\_api\_id\_a =
-FWK\_ID\_API\_INIT( FWK\_MODULE\_IDX\_MODULENAME,
-MOD\_MODULENAME\_API\_IDX\_A); static const fwk\_id\_t
-mod\_modulename\_api\_id\_b = FWK\_ID\_API\_INIT(
-FWK\_MODULE\_IDX\_MODULENAME, MOD\_MODULENAME\_API\_IDX\_B);
-:raw-latex:`\endcode`
+`\code
+`static const fwk_id_t mod_modulename_api_id_a =
+FWK_ID_API_INIT( FWK_MODULE_IDX_MODULENAME,
+MOD_MODULENAME_API_IDX_A); static const fwk_id_t
+mod_modulename_api_id_b = FWK_ID_API_INIT(
+FWK_MODULE_IDX_MODULENAME, MOD_MODULENAME_API_IDX_B);
+`\endcode`
 
 Events
 ~~~~~~
@@ -348,18 +337,18 @@ a target, the source and target being a module, element, or sub-element.
 
 When an entity receives and processes an event, it may need to respond
 to the entity that issued the event. The event contains a
-*response\_requested* property that indicates whether or not the source
+*response_requested* property that indicates whether or not the source
 entity expects a response to its event or not. To respond to this event,
 the receiving entity fills out the response parameters and the framework
 issues an event that targets the entity which issued the original event.
-The *is\_response* property of the event is used to indicate that the
+The *is_response* property of the event is used to indicate that the
 newly-generated event is in response to the original event.
 
 Events contain a block of memory to store parameters that are used to
 pass information between the source and target entity. This memory is
 intended to be written to and read through a C structure. The size
-(bytes) of this space is defined by *FWK\_EVENT\_PARAMETERS\_SIZE* in
-fwk\_event.h.
+(bytes) of this space is defined by *FWK_EVENT_PARAMETERS_SIZE* in
+fwk_event.h.
 
 Framework Concepts
 ------------------
@@ -396,7 +385,7 @@ fixed order:
 
 Each stage is executed for each module before moving onto the next
 stage, and modules are processed in the order they are given in the
-*BS\_FIRMWARE\_MODULES* list.
+*BS_FIRMWARE_MODULES* list.
 
 Once these stages have all been completed the firmware as a whole is
 considered to be fully initialized and execution enters the *runtime
@@ -415,7 +404,7 @@ Element Initialization
 ''''''''''''''''''''''
 
 The framework invokes the function that the module provides to satisfy
-the *element\_init()* function pointer of the framework's module API.
+the *element_init()* function pointer of the framework's module API.
 This function is invoked once for each element that is defined in the
 firmware's element table for the module.
 
@@ -528,16 +517,16 @@ The framework contains a log component to ensure that logging
 functionality is always available and is not tied to the availability of
 any particular module. The framework defines and implements the public
 interface for this component. Documentation for this interface can be
-found in fwk\_log.h.
+found in fwk_log.h.
 
 To ensure that the framework is platform-independent, the log component
 relies on a small set of functions to do platform-specific work like
 flushing the buffer and outputting characters. These functions make up
-the log driver interface and are forward declared in fwk\_log.h:
+the log driver interface and are forward declared in fwk_log.h:
 
-:raw-latex:`\code
-`int fwk\_log\_driver\_init(void); int fwk\_log\_driver\_putchar(char
-c); int fwk\_log\_driver\_flush(void); :raw-latex:`\endcode`
+`\code
+`int fwk_log_driver_init(void); int fwk_log_driver_putchar(char
+c); int fwk_log_driver_flush(void); `\endcode`
 
 The framework only implements weakly-linked "stub" versions of these
 functions that simply return an error code. It is expected that
@@ -550,21 +539,21 @@ suffice. This is because the log driver functions could be called before
 the module receives its configuration data in the initialization stage
 of the framework. To allow the passing of configuration data to this
 module, the log component in the framework externally declares a pointer
-to configuration data: (fwk\_log.h)
+to configuration data: (fwk_log.h)
 
-:raw-latex:`\code
-`extern void \*fwk\_log\_driver\_config; :raw-latex:`\endcode`
+`\code
+`extern void \*fwk_log_driver_config; `\endcode`
 
 It is expected that the firmware-specific module configuration code for
-the driver module (config\_mod\_xxx.c) will concretely declare this
+the driver module (config_mod_xxx.c) will concretely declare this
 variable and initialize it to point to some configuration structure:
 
-:raw-latex:`\code
-`struct mod\_xxx\_fwk\_log\_config cfg = { .x = 1, .y = 2, .z = 3, };
+`\code
+`struct mod_xxx_fwk_log_config cfg = { .x = 1, .y = 2, .z = 3, };
 
-void \*fwk\_log\_driver\_config = &cfg; :raw-latex:`\endcode`
+void \*fwk_log_driver_config = &cfg; `\endcode`
 
 The driver module can then access its log framework related
 configuration data at any time. It is expected that the driver module
 performs initialization using this configuration data in the
-fwk\_log\_driver\_init() function.
+fwk_log_driver_init() function.

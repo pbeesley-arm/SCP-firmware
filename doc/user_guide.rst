@@ -1,5 +1,5 @@
-SCP-firmware User Guide
-=======================
+Setup and Build Guide
+=====================
 
 This document describes how to build the SCP and MCP firmware and run it
 with a tested set of other software components using defined
@@ -139,35 +139,35 @@ please refer to `System Guidance for Mobile
 
 The build system generates the list of firmware images as defined by the
 product.mk file associated with the product. For SGM platforms, two
-firmware images are built, referred to as 'scp\_romfw' and 'scp\_ramfw'
+firmware images are built, referred to as 'scp_romfw' and 'scp_ramfw'
 below.
 
-The scp\_romfw firmware image exists in the ROM of the system. It is the
+The scp_romfw firmware image exists in the ROM of the system. It is the
 first firmware image executed when booting an SGM platform. It does the
 minimal setup and initialization of the system, and powers on the
 primary application core. Then, it waits for the primary core to load
-the scp\_ramfw image into secure RAM before handing over execution to
+the scp_ramfw image into secure RAM before handing over execution to
 it.
 
-The scp\_ramfw firmware image provides all the runtime services
+The scp_ramfw firmware image provides all the runtime services
 delegated to the SCP as a part of the system. It is loaded by the
-primary core and not the scp\_romfw firmware to leverage the processing
+primary core and not the scp_romfw firmware to leverage the processing
 power of the application processor for image authentication.
 
-In order for the scp\_ramfw firmware image to be loaded per the boot
+In order for the scp_ramfw firmware image to be loaded per the boot
 flow described above, a minimal application processor firmware needs to
 be available. This typically consists of at least two images:
 
 -  bl1: First-stage bootloader stored in the system ROM
 -  bl2: Second-stage bootloader loaded by bl1, responsible for loading
-   the scp\_ramfw firmware image and other application processor
+   the scp_ramfw firmware image and other application processor
    firmware images into system RAM
 
 For more information about application processor firmware images and how
 to build them, please refer to the `Arm Trusted Firmware-A user
 guide <https://github.com/ARM-software/arm-trusted-firmware/blob/master/docs/user-guide.rst>`__.
 
-In order for the bl2 firmware image and the scp\_ramfw firmware image to
+In order for the bl2 firmware image and the scp_ramfw firmware image to
 be made available to their respective loaders, they must be packaged in
 a Firmware Image Package (FIP). Please refer to the Arm Trusted
 Firmware-A user guide for instructions on building FIP packages.
@@ -210,11 +210,11 @@ Arm platform, please refer to `Run the Arm Platforms deliverables on an
 FVP <https://community.arm.com/dev-platforms/w/docs/392/run-the-arm-platforms-deliverables-on-an-fvp>`__.
 
 Note that the script initializing the workspace does not currently
-download the gcc-arm-none-eabi-5\_4-2016q3 toolchain needed to build
+download the gcc-arm-none-eabi-5_4-2016q3 toolchain needed to build
 SCP-firmware. As such, you will need to download it from
 `here <https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads>`__
 and extract it into the
-workspace/tools/gcc/gcc-arm-none-eabi-5\_4-2016q3 directory.
+workspace/tools/gcc/gcc-arm-none-eabi-5_4-2016q3 directory.
 
 Once the software stack has been retrieved, the SCP/MCP source code can
 be found in the 'scp' directory at the root of the workspace.
@@ -241,5 +241,5 @@ As an example, to run the software stack, on the SGM-775 FVP:
     $> cd ./model-scripts/sgm775
     $> ./run_model.sh -t sgm775
 
-The SCP ROM/RAM firmware logs are written to the FVP terminal\_s1
+The SCP ROM/RAM firmware logs are written to the FVP terminal_s1
 window, where the firmware tag or commit identifier can also be found.

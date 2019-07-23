@@ -1,38 +1,24 @@
-SCP-firmware - version 2.4
-==========================
+System Control Processor (SCP) Firmware
+=======================================
 
 .. toctree::
    :maxdepth: 1
    :hidden:
 
    Home<self>
-   change_log
-   cmsis
-   code_style
-   contributing
-   framework
-   glossary
    user_guide
+   framework
+   cmsis
+   contributing
+   code_style
+   change_log
    maintainers
    license
+   glossary
 
 .. contents:: On This Page
-    :depth: 3
+    :depth: 2
 
-References
-----------
-
-[1] Power Control System Architecture - DEN0050C (Please contact Arm
-directly to obtain a copy of this document)
-
-[2] [System Control and Management Interface -
-DEN0056A](http://infocenter.arm.com/help/topic/com.arm.doc.den0056a/DEN0056A\_System\_Control\_and\_Management\_Interface.pdf)
-
-[3] Power Policy Unit - DEN0051C (Please contact Arm directly to obtain
-a copy of this document)
-
-[4] [System
-Guidance](https://developer.arm.com/products/system-design/system-guidance)
 
 Introduction
 ------------
@@ -55,6 +41,12 @@ SoC targeting servers.
 SCP-firmware provides a software reference implementation for the System
 Control Processor (SCP) and Manageability Control Processor (MCP)
 components found in several Arm Compute Sub-Systems.
+
+Getting started
+---------------
+
+See user_guide.md for instructions on how to get, install, build and
+use SCP-firmware on supported Arm platforms.
 
 Functionality
 -------------
@@ -87,17 +79,27 @@ License
 The software is provided under a `BSD-3-Clause
 license <https://spdx.org/licenses/BSD-3-Clause.html>`__.
 
-Getting started
----------------
-
-See user\_guide.md for instructions on how to get, install, build and
-use SCP-firmware on supported Arm platforms.
-
 Feedback and Support
 --------------------
 
-Arm welcomes any feedback on SCP-firmware. Please contact the
-maintainers (see maintainers.md).
+Arm welcomes any feedback on the SCP/MCP Software, including on this
+documentation. Please contact the maintainers (see maintainers.md).
 
-To request support please contact Arm by email at support@arm.com. Arm
-licensees may also contact Arm via their partner managers.
+To provide feedback or to request support please contact
+Arm by email at support@arm.com. Arm licensees may also contact Arm via
+their partner managers.
+
+References
+----------
+
+[1] Power Control System Architecture - DEN0050C (Please contact Arm
+directly to obtain a copy of this document)
+
+[2] [System Control and Management Interface -
+DEN0056A](http://infocenter.arm.com/help/topic/com.arm.doc.den0056a/DEN0056A_System_Control_and_Management_Interface.pdf)
+
+[3] Power Policy Unit - DEN0051C (Please contact Arm directly to obtain
+a copy of this document)
+
+[4] [System
+Guidance](https://developer.arm.com/products/system-design/system-guidance)
